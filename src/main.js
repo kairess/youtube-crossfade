@@ -98,6 +98,7 @@ function doCrossFade(to, strength) {
   if (pFromNewVolume === 0) {
     if (pToNewVolume === MAX_VOLUME) {
       pFrom.pauseVideo();
+
       renderActiveVideoMark(to === 1 ? 2 : 1, to);
       clearInterval(faderTick);
     }
@@ -123,7 +124,6 @@ function playVideo(id) {
   } else if (active === 1) {
     player2.loadVideoById(id);
     player2.setVolume(0);
-    player1.setVolume(100);
 
     player1.playVideo();
     player2.playVideo();
@@ -133,7 +133,6 @@ function playVideo(id) {
   } else if (active === 2) {
     player1.loadVideoById(id);
     player1.setVolume(0);
-    player2.setVolume(100);
 
     crossFadeTo(1);
     active = 1;
@@ -141,9 +140,6 @@ function playVideo(id) {
 
   player1.playVideo();
   player2.playVideo();
-
-  player1.unMute();
-  player2.unMute();
 }
 
 
@@ -326,6 +322,8 @@ function onYouTubeIframeAPIReady() {
         // playing
         if (event.data === 1) {
           crossFade1 = true;
+          player1.setVolume(1);
+          player1.unMute();
         } else {
           crossFade1 = false;
         }
@@ -340,6 +338,8 @@ function onYouTubeIframeAPIReady() {
       onStateChange: (event) => {
         // playing
         if (event.data === 1) {
+          player2.setVolume(1);
+          player2.unMute();
           crossFade2 = true;
         } else {
           crossFade2 = false;
