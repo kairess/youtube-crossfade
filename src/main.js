@@ -115,25 +115,41 @@ function crossFadeTo(to) {
 
 
 function playVideo(id) {
+  // Check the automagic stop
+  const startFromZero = document.getElementById('beginning__checkbox').checked;
+  console.info(`🔮 Automagic disabled? ${startFromZero}`);
+
   // First time playing - no cross fade
   if (active === 0) {
-    player1.loadVideoById(id);
+    if (startFromZero) {
+      player1.loadVideoById(id, 0);
+      player1.seekTo(0);
+    } else {
+      player1.loadVideoById(id);
+    }
+
     player1.setVolume(100);
-    player2.setVolume(0);
     active = 1;
   } else if (active === 1) {
-    player2.loadVideoById(id);
+    if (startFromZero) {
+      player2.loadVideoById(id);
+      player2.seekTo(0);
+    } else {
+      player2.loadVideoById(id);
+    }
+
     player2.setVolume(0);
-
-    player1.playVideo();
-    player2.playVideo();
-
     crossFadeTo(2);
     active = 2;
   } else if (active === 2) {
-    player1.loadVideoById(id);
-    player1.setVolume(0);
+    if (startFromZero) {
+      player1.loadVideoById(id, 0);
+      player1.seekTo(0);
+    } else {
+      player1.loadVideoById(id);
+    }
 
+    player1.setVolume(0);
     crossFadeTo(1);
     active = 1;
   }
@@ -322,7 +338,6 @@ function onYouTubeIframeAPIReady() {
         // playing
         if (event.data === 1) {
           crossFade1 = true;
-          player1.setVolume(1);
           player1.unMute();
         } else {
           crossFade1 = false;
@@ -338,7 +353,6 @@ function onYouTubeIframeAPIReady() {
       onStateChange: (event) => {
         // playing
         if (event.data === 1) {
-          player2.setVolume(1);
           player2.unMute();
           crossFade2 = true;
         } else {

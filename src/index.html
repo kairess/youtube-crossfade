@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-slider@2.0.0/dist/css/bulma-slider.min.css">
     <link rel="stylesheet" href="styles.css">
 
-    <script async src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
     <script async src="https://cdn.jsdelivr.net/npm/bulma-slider@2.0.0/dist/js/bulma-slider.min.js"></script>
     <script defer src="slider.js"></script>
@@ -40,10 +40,17 @@
             <div class="field">
                 <label class="label">Crossfade strength</label>
                 <div class="control">
-                    <input id="crossfade__slider" class="slider is-fullwidth has-output" step="0.5" min="0" max="60"
+                    <input id="crossfade__slider" class="slider is-fullwidth has-output" step="0.5" min="0" max="90"
                         value="3" type="range">
                     <output for="crossfade__slider">3</output>
                     <p class="help">in seconds</p>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Always start from the beginning</label>
+                <div class="control checkbox">
+                    <input id="beginning__checkbox" type="checkbox">
+                    <p class="help">Disables YouTube's automagic position memory 🧙‍♂️</p>
                 </div>
             </div>
         </section>

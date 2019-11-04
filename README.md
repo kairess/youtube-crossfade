@@ -9,11 +9,12 @@ This
 - [x] Simple playlist
   - [x] Can add videos from YouTube by URL
   - [x] Can remove videos
-- [ ] Can cross fade videos by simply chosing a different video in the playlist
-- [ ] Has adjustable features on how long to fade out
+- [x] Can cross fade videos by simply chosing a different video in the playlist
+- [x] Has adjustable features on how long to fade out
 - [x] Can reorder songs
-- [ ] Autoplays to next video in the playlist
 - [ ] If video already queued, have an option to continue the song
+- [ ] Autoplays to next video in the playlist
+
 
 ## Usage
 - Serve up `src/` using a HTTP server like `python3 -m http.server` (requires Python) or install `http-server` from Node and use that.
@@ -29,7 +30,8 @@ This
 - Run `npm install`
 
 ## Contributing
-Mostly a personal project - just make a fork
+Mostly a personal project - won't be actively maintained. If you'd like to use this project and modify it see the licenses below.
 
-## License
-[CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)
+## Licenses
+See LICENSE.md for this project's license.
+
