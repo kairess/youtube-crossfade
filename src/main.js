@@ -14,6 +14,8 @@ const STORAGE_DOMAIN = 'ycf__playlist';
 
 let crossFade1 = false;
 let crossFade2 = false;
+let isFading = false;
+
 
 function savePlaylist(playlist) {
   localStorage.setItem(STORAGE_DOMAIN, JSON.stringify(playlist));
@@ -97,6 +99,7 @@ function doCrossFade(to, strength) {
 
   if (pFromNewVolume === 0) {
     if (pToNewVolume === MAX_VOLUME) {
+      isFading = false;
       pFrom.pauseVideo();
 
       renderActiveVideoMark(to === 1 ? 2 : 1, to);
@@ -109,15 +112,21 @@ function doCrossFade(to, strength) {
 function crossFadeTo(to) {
   const crossFadeStrength = document.getElementById('crossfade__slider').value;
   const eachTick = (crossFadeStrength * 1000) / FIDELITY_MS;
+  isFading = true;
 
   faderTick = setInterval(() => doCrossFade(to, MAX_VOLUME / eachTick), FIDELITY_MS);
 }
 
 
 function playVideo(id) {
+  if (isFading) {
+    clearInterval(faderTick);
+    // eslint-disable-next-line no-console
+    console.warn('Was fading already but starting again 🌵');
+  }
+
   // Check the automagic stop
   const startFromZero = document.getElementById('beginning__checkbox').checked;
-  console.info(`🔮 Automagic disabled? ${startFromZero}`);
 
   // First time playing - no cross fade
   if (active === 0) {
@@ -379,6 +388,8 @@ function onYouTubeIframeAPIReady() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  // eslint-disable-next-line no-console
+  console.log('%c🌵', 'font-size:30px');
   document.getElementById('playlist__form--add-url').addEventListener('submit', (event) => {
     event.preventDefault();
     addPlaylistUrl();

@@ -1,4 +1,4 @@
-
+// eslint-disable-next-line no-unused-vars
 function clearRenderedPlaylist() {
   const list = document.getElementById('playlist__list');
   while (list.firstChild) {
@@ -11,6 +11,7 @@ function clearRenderedPlaylist() {
   list.appendChild(placeholder);
 }
 
+// eslint-disable-next-line no-unused-vars
 function createPlaylistItem(videoId, title, duration, author, index) {
   const vidItem = document.createElement('li');
   vidItem.classList.add('playlist__listitem');
@@ -33,6 +34,7 @@ function createPlaylistItem(videoId, title, duration, author, index) {
   deleteBtn.className = 'delete';
   deleteBtn.addEventListener('click', (e) => {
     e.preventDefault();
+    // eslint-disable-next-line no-undef
     removePlaylistId(e.target.dataset.id);
   });
 
