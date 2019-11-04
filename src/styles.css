@@ -16,6 +16,10 @@
 
 }
 
+.player--active {
+    border: 5px solid blue;
+}
+
 
 #playlist__list--placeholder:only-child {
     display: block;

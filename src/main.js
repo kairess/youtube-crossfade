@@ -8,9 +8,12 @@ let playlistSort = null;
 
 let faderTick = null;
 
-const FIDELITY_MS = 100;
+const FIDELITY_MS = 500;
 const MAX_VOLUME = 100;
 const STORAGE_DOMAIN = 'ycf__playlist';
+
+let crossFade1 = false;
+let crossFade2 = false;
 
 function savePlaylist(playlist) {
   localStorage.setItem(STORAGE_DOMAIN, JSON.stringify(playlist));
@@ -69,20 +72,32 @@ function loadPlaylist() {
   return playlist;
 }
 
+function renderActiveVideoMark(inactiveId, activeId) {
+  document.getElementById(`player${activeId}`).parentElement.querySelector('.player__caption').innerText = `▶ Player ${activeId}`;
+  document.getElementById(`player${inactiveId}`).parentElement.querySelector('.player__caption').innerText = `⏸ Player ${inactiveId}`;
+}
+
 function doCrossFade(to, strength) {
+  if (!crossFade1 || !crossFade2) return;
+
   const pTo = to === 1 ? player1 : player2;
   const pFrom = to === 1 ? player2 : player1;
 
-  let newVolume = pTo.getVolume();
-  newVolume = Math.min(newVolume + strength, MAX_VOLUME);
-  pTo.setVolume(newVolume);
 
-  newVolume = pFrom.getVolume();
-  newVolume = Math.max(newVolume - strength, 0);
-  pFrom.setVolume(newVolume);
+  let pToNewVolume = pTo.getVolume();
+  pToNewVolume = Math.min(pToNewVolume + strength, MAX_VOLUME);
+  pTo.setVolume(pToNewVolume);
 
-  if (newVolume === 0) {
-    pFrom.stopVideo();
+  let pFromNewVolume = pFrom.getVolume();
+  pFromNewVolume = Math.max(pFromNewVolume - strength, 0);
+  pFrom.setVolume(pFromNewVolume);
+
+  if (pFromNewVolume === 0) {
+    if (pToNewVolume === MAX_VOLUME) {
+      pFrom.pauseVideo();
+      renderActiveVideoMark(to === 1 ? 2 : 1, to);
+      clearInterval(faderTick);
+    }
   }
 }
 
@@ -92,9 +107,6 @@ function crossFadeTo(to) {
   const eachTick = (crossFadeStrength * 1000) / FIDELITY_MS;
 
   faderTick = setInterval(() => doCrossFade(to, MAX_VOLUME / eachTick), FIDELITY_MS);
-  setTimeout(() => {
-    clearInterval(faderTick);
-  }, crossFadeStrength * 1000);
 }
 
 
@@ -102,20 +114,33 @@ function playVideo(id) {
   // First time playing - no cross fade
   if (active === 0) {
     player1.loadVideoById(id);
+    player1.setVolume(100);
+    player2.setVolume(0);
     active = 1;
   } else if (active === 1) {
     player2.loadVideoById(id);
     player2.setVolume(0);
+    player1.setVolume(100);
+
+    player1.playVideo();
+    player2.playVideo();
 
     crossFadeTo(2);
     active = 2;
   } else if (active === 2) {
     player1.loadVideoById(id);
     player1.setVolume(0);
+    player2.setVolume(100);
 
     crossFadeTo(1);
     active = 1;
   }
+
+  player1.playVideo();
+  player2.playVideo();
+
+  player1.unMute();
+  player2.unMute();
 }
 
 
@@ -293,13 +318,31 @@ function onYouTubeIframeAPIReady() {
   player1 = new YT.Player('player1', {
     height: '240',
     width: '380',
-    events: {},
+    events: {
+      onStateChange: (event) => {
+        // playing
+        if (event.data === 1) {
+          crossFade1 = true;
+        } else {
+          crossFade1 = false;
+        }
+      },
+    },
   });
 
   player2 = new YT.Player('player2', {
     height: '240',
     width: '380',
-    events: {},
+    events: {
+      onStateChange: (event) => {
+        // playing
+        if (event.data === 1) {
+          crossFade2 = true;
+        } else {
+          crossFade2 = false;
+        }
+      },
+    },
   });
 
   metaplayer = new YT.Player('_metaplayer', {
