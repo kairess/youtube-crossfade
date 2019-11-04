@@ -92,6 +92,9 @@ function doCrossFade(to, strength) {
   pFromNewVolume = Math.max(pFromNewVolume - strength, 0);
   pFrom.setVolume(pFromNewVolume);
 
+  // eslint-disable-next-line no-console
+  console.debug(`Fading to player ${to}: (⬇${pFromNewVolume}|⬆${pToNewVolume})`);
+
   if (pFromNewVolume === 0) {
     if (pToNewVolume === MAX_VOLUME) {
       pFrom.pauseVideo();
