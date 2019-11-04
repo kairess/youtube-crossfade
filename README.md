@@ -33,5 +33,5 @@ There is a [demo site](https://crossfade.gawdn.com) set up. Please don't spam it
 Mostly a personal project - won't be actively maintained. If you'd like to use this project and modify it see the licenses below.
 
 ## Licenses
-See LICENSE.md for this project's license.
+See [LICENSE](LICENSE) for this project's license.
 
