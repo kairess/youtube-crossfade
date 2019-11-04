@@ -1,0 +1,23 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 2019,
+        "sourceType": "script",
+        "ecmaFeatures": {
+            "spread": true
+        }
+    },
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": [
+        "airbnb"
+    ],
+    "rules": {
+        "no-unused-vars": 1
+    },
+    "globals": {
+        "YT": "readonly",
+        "Sortable": "readonly"
+    }
+}

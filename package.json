@@ -1,0 +1,24 @@
+{
+  "name": "33-youtube-crossfade",
+  "version": "0.1.0",
+  "description": "Helps crossfade between YouTube videos (primarily intended as a GM tool)",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gawdn/youtube-crossfade.git"
+  },
+  "author": "gawdn",
+  "license": "CC0-1.0",
+  "bugs": {
+    "url": "https://github.com/gawdn/youtube-crossfade/issues"
+  },
+  "homepage": "https://github.com/gawdn/youtube-crossfade#readme"
+}

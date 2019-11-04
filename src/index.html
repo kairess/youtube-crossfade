@@ -4,13 +4,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>YouTube crossfade</title>
-    <link rel="stylesheet" href="styles.css" type="text/css">
+    <title>YouTube Crossfade</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-slider@2.0.0/dist/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <script async src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/bulma-slider@2.0.0/dist/js/bulma-slider.min.js"></script>
+    <script defer src="slider.js"></script>
 </head>
 
 <body>
+    <div class="container">
+        <section class="box">
+            <div class="columns">
+                <div class="column">
+                    <div class="player__wrapper">
+                        <div id="player1" class="player"></div>
+                        <p class="player__caption">Player 1</p>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="player__wrapper">
+                        <div id="player2" class="player"></div>
+                        <p class="player__caption">Player 2</p>
+                    </div>
+                </div>
+                <div id="_metaplayer"></div>
+            </div>
+        </section>
+        <section class="box">
+            <div class="field">
+                <label class="label">Crossfade strength</label>
+                <div class="control">
+                    <input id="crossfade__slider" class="slider is-fullwidth has-output" step="0.5" min="0" max="15"
+                        value="3" type="range">
+                    <output for="crossfade__slider">3</output>
+                    <p class="help">in seconds</p>
+                </div>
+            </div>
+        </section>
 
+        <section class="box">
+            <form id="playlist__form--add-url">
+                <div class="field">
+                    <label class="label">Add a YouTube URL to the playlist</label>
+                    <p class="control has-icons-left has-icons-right">
+                        <input class="input" type="url" pattern="https://.*\.youtube\.com/watch\?v=.*"
+                            id="playlist__input--add-url" placeholder="">
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-link" aria-hidden="true"></i>
+                        </span>
+                    </p>
+                    <p class="help">Enter a desktop URL like: https://www.youtube.com/watch?v=GENERIC_VIDEO_ID</p>
+                </div>
+            </form>
+            <hr>
+            <h1 class="title is-size-3" id="playlist__header">Playlist</h1>
+            <p class="">Click on an item to fade to that video. Drag & drop the items to sort them.</p>
+            <hr>
 
+            <ol id="playlist__list">
+            </ol>
+        </section>
+    </div>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="render.js"></script>
     <script src="main.js"></script>
 </body>
 
