@@ -2,9 +2,6 @@
 
 A super simple hacky app intended to help GM/DMs to cross fade music/ambient noise from YouTube (not affiliated).
 
-## Demo site
-There is a [demo site](https://crossfade.gawdn.com) set up. Please don't spam it &ndash; if it gives a 404 I probably gave up maintaining it 😄.
-
 ## Feature set
 - [x] Simple playlist
   - [x] Can add videos from YouTube by URL
